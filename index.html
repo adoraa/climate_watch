@@ -632,22 +632,7 @@
             <div class="profile-field-label">Region</div>
             <div class="profile-field-value" id="profile-region"></div>
           </div>
-          <!--<div class="profile-field">
-            <div class="profile-field-label">Station ID</div>
-            <div class="profile-field-value mono" id="profile-station"></div>
-          </div>
-          <div class="profile-field">
-            <div class="profile-field-label">Coordinates</div>
-            <div class="profile-field-value mono" id="profile-coords"></div>
-          </div>-->
         </div>
-        <!--<div class="info-card">
-          <h3>Account summary</h3>
-          <div class="info-row"><span class="info-row-label">Total entries</span><span id="info-entries"></span></div>
-          <div class="info-row"><span class="info-row-label">Latest reading</span><span id="info-latest"></span></div>
-          <div class="info-row"><span class="info-row-label">Plan</span><span>Field Member</span></div>
-          <div class="info-row"><span class="info-row-label">Data access</span><span>Weather · Risk · History</span></div>
-        </div>-->
       </div>
     </div>
 
@@ -800,9 +785,6 @@ function renderDial(risk, entry) {
 
   document.getElementById("dial-label").textContent = riskLabel(risk.level);
   document.getElementById("dial-label").style.color = colors[risk.level];
-
-  document.getElementById("dial-pill").innerHTML = `
-    <div class="risk-pill ${risk.level}"><div class="risk-pill-dot"></div>${riskLabel(risk.level)} risk</div>`;
 }
 
 function renderTable(data) {
