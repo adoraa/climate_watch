@@ -696,10 +696,10 @@ const PAGE_SIZE = 5;
 function getRisk(date, rain) {
   const m = new Date(date).getUTCMonth() + 1;
   const noRain = parseFloat(rain) === 0.00;
-  if ([10,11,12,1,2,3].includes(m) && noRain) return { level: "high",   reason: `Month ${monthName(m)}, 0.00mm rain — peak fire season` };
-  if ([4,6,7].includes(m)            && noRain) return { level: "medium", reason: `Month ${monthName(m)}, 0.00mm rain — moderate fire risk` };
-  if ([8,9].includes(m)              && noRain) return { level: "low",    reason: `Month ${monthName(m)}, 0.00mm rain — low fire risk` };
-  return { level: "medium", reason: rain > 0 ? `${rain}mm rainfall recorded — risk reduced` : "Insufficient data for classification" };
+  if ([10,11,12,1,2,3].includes(m) && noRain) return { level: "high",   reason: `Month ${monthName(m)}, 0.00mm rain. Peak fire season` };
+  if ([4,6,7].includes(m)            && noRain) return { level: "medium", reason: `Month ${monthName(m)}, 0.00mm rain. Moderate fire risk` };
+  if ([8,9].includes(m)              && noRain) return { level: "low",    reason: `Month ${monthName(m)}, 0.00mm rain. Low fire risk` };
+  return { level: "medium", reason: rain > 0 ? `${rain}mm rainfall recorded. Risk reduced` : "Insufficient data for classification" };
 }
 
 function monthName(m) {
