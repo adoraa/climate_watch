@@ -72,18 +72,17 @@
       <div class="stats-row" id="stats-row"></div>
       <div class="dash-grid">
         <div class="risk-card">
-          <div class="risk-card-label">Current fire risk</div>
           <div class="dial-wrap">
-            <svg id="dial-svg" viewBox="0 0 180 110" xmlns="http://www.w3.org/2000/svg">
-              <path id="arc-low"    d="" stroke-width="12" stroke-linecap="round" fill="none"/>
-              <path id="arc-medium" d="" stroke-width="12" stroke-linecap="round" fill="none"/>
-              <path id="arc-high"   d="" stroke-width="12" stroke-linecap="round" fill="none"/>
-              <line id="dial-needle" x1="90" y1="90" x2="90" y2="30" stroke="#0a0a0a" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="90" cy="90" r="5" fill="#0a0a0a"/>
+            <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 20 100 A 80 80 0 0 1 73 27"  stroke="#e74c3c" stroke-width="3" fill="none" stroke-linecap="butt"/>
+              <path d="M 73 27  A 80 80 0 0 1 127 27" stroke="#f1c40f" stroke-width="3" fill="none" stroke-linecap="butt"/>
+              <path d="M 127 27 A 80 80 0 0 1 180 100" stroke="#27ae60" stroke-width="3" fill="none" stroke-linecap="butt"/>
+              <line id="dial-needle" x1="100" y1="100" x2="100" y2="30" stroke="#0a0a0a" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="100" cy="100" r="5" fill="#0a0a0a"/>
             </svg>
           </div>
-          <div id="dial-pill"></div>
-          <div class="risk-rule" id="dial-rule"></div>
+          <div class="risk-card-label">Risk Level</div>
+          <div id="dial-label" class="dial-risk-text">—</div>
         </div>
         <div class="table-card">
           <div class="table-card-header">

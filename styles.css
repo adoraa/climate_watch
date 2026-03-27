@@ -318,12 +318,16 @@ body {
   color: var(--gray-400);
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  margin-bottom: 16px;
+  margin-bottom: 6px;
+}
+.dial-risk-text {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 .dial-wrap {
-  position: relative;
-  width: 180px;
-  margin: 0 auto 16px;
+  width: 200px;
+  margin: 0 auto 8px;
 }
 .dial-wrap svg {
   width: 100%;
