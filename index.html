@@ -3,476 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Climate Watch by SMACON | Portal</title>
+<title>TFA by SMACON | Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --black: #0a0a0a;
-    --white: #ffffff;
-    --gray-50: #f9f9f9;
-    --gray-100: #f0f0f0;
-    --gray-200: #e0e0e0;
-    --gray-400: #9e9e9e;
-    --gray-600: #555;
-    --gray-800: #222;
-    --risk-high: #c0392b;
-    --risk-high-bg: #fdf2f2;
-    --risk-medium: #d68910;
-    --risk-medium-bg: #fdf8ee;
-    --risk-low: #1e8449;
-    --risk-low-bg: #f0faf4;
-    --accent: #0a0a0a;
-    --radius: 10px;
-    --radius-sm: 6px;
-    --font: 'Inter', sans-serif;
-    --mono: 'DM Mono', monospace;
-    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
-  }
-
-  body {
-    font-family: var(--font);
-    background: var(--gray-50);
-    color: var(--black);
-    font-size: 14px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  /* ── VIEWS ── */
-  .view { display: none; min-height: 100vh; }
-  .view.active { display: flex; }
-
-  /* ── LOGIN ── */
-  #view-login {
-    align-items: center;
-    justify-content: center;
-    background: var(--white);
-  }
-  .login-box {
-    width: 100%;
-    max-width: 380px;
-    padding: 48px 40px;
-  }
-  .login-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 36px;
-  }
-  .login-logo-icon {
-    width: 32px;
-    height: 32px;
-    background: var(--black);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .login-logo-icon svg { width: 18px; height: 18px; }
-  .login-logo-name {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: -0.3px;
-  }
-  .login-box h1 {
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.4px;
-    margin-bottom: 6px;
-  }
-  .login-box p {
-    font-size: 13px;
-    color: var(--gray-600);
-    margin-bottom: 28px;
-  }
-  .field { margin-bottom: 16px; }
-  .field label {
-    display: block;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--gray-600);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .field input {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-family: var(--font);
-    background: var(--white);
-    color: var(--black);
-    outline: none;
-    transition: border-color 0.15s;
-  }
-  .field input:focus { border-color: var(--black); }
-  .btn-primary {
-    width: 100%;
-    padding: 11px;
-    background: var(--black);
-    color: var(--white);
-    border: none;
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-weight: 500;
-    font-family: var(--font);
-    cursor: pointer;
-    margin-top: 8px;
-    transition: opacity 0.15s;
-  }
-  .btn-primary:hover { opacity: 0.85; }
-  .login-error {
-    font-size: 12px;
-    color: var(--risk-high);
-    margin-top: 10px;
-    display: none;
-  }
-  .login-hint {
-    margin-top: 24px;
-    padding: 14px;
-    background: var(--gray-50);
-    border-radius: var(--radius-sm);
-    font-size: 12px;
-    color: var(--gray-600);
-    font-family: var(--mono);
-  }
-  .login-hint span { display: block; margin-bottom: 3px; }
-
-  /* ── APP SHELL ── */
-  #view-app {
-    flex-direction: column;
-    background: var(--gray-50);
-  }
-  .nav {
-    background: var(--white);
-    border-bottom: 1px solid var(--gray-200);
-    padding: 0 28px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  .nav-left { display: flex; align-items: center; gap: 28px; }
-  .nav-logo { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
-  .nav-logo-dot { width: 8px; height: 8px; background: var(--black); border-radius: 50%; }
-  .nav-tabs { display: flex; gap: 2px; }
-  .nav-tab {
-    padding: 6px 14px;
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--gray-600);
-    cursor: pointer;
-    border-radius: var(--radius-sm);
-    border: none;
-    background: none;
-    font-family: var(--font);
-    transition: all 0.15s;
-  }
-  .nav-tab:hover { background: var(--gray-100); color: var(--black); }
-  .nav-tab.active { background: var(--gray-100); color: var(--black); font-weight: 500; }
-  .nav-right { display: flex; align-items: center; gap: 14px; }
-  .nav-org {
-    font-size: 13px;
-    color: var(--gray-600);
-  }
-  .nav-org strong { color: var(--black); font-weight: 500; }
-  .btn-ghost {
-    padding: 7px 14px;
-    background: none;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    font-family: var(--font);
-    cursor: pointer;
-    color: var(--gray-600);
-    transition: all 0.15s;
-  }
-  .btn-ghost:hover { border-color: var(--black); color: var(--black); }
-
-  .app-body { flex: 1; }
-
-  /* ── PANELS ── */
-  .panel { display: none; padding: 28px; max-width: 960px; margin: 0 auto; }
-  .panel.active { display: block; }
-
-  /* ── DASHBOARD ── */
-  .dash-header { margin-bottom: 24px; }
-  .dash-header h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
-  .dash-header p { font-size: 13px; color: var(--gray-600); margin-top: 2px; }
-
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-  .stat-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    padding: 18px 20px;
-  }
-  .stat-label { font-size: 11px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
-  .stat-value { font-size: 22px; font-weight: 600; letter-spacing: -0.5px; }
-  .stat-sub { font-size: 12px; color: var(--gray-400); margin-top: 3px; }
-
-  /* Risk Dial */
-  .dash-grid {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 16px;
-    margin-bottom: 24px;
-    align-items: start;
-  }
-  .risk-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    padding: 24px;
-    text-align: center;
-  }
-  .risk-card-label { font-size: 11px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 16px; }
-  .dial-wrap { position: relative; width: 180px; margin: 0 auto 16px; }
-  .dial-wrap svg { width: 100%; display: block; }
-  .dial-value-text {
-    position: absolute;
-    bottom: 8px;
-    left: 0; right: 0;
-    text-align: center;
-  }
-  .dial-value-text .risk-label {
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: -0.3px;
-  }
-  .dial-value-text .risk-sublabel {
-    font-size: 11px;
-    color: var(--gray-400);
-    margin-top: 2px;
-  }
-  .risk-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 500;
-  }
-  .risk-pill.high { background: var(--risk-high-bg); color: var(--risk-high); }
-  .risk-pill.medium { background: var(--risk-medium-bg); color: var(--risk-medium); }
-  .risk-pill.low { background: var(--risk-low-bg); color: var(--risk-low); }
-  .risk-pill-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-  .risk-rule { font-size: 12px; color: var(--gray-400); margin-top: 12px; line-height: 1.5; }
-
-  /* Table Card */
-  .table-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .table-card-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--gray-100);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .table-card-header h3 { font-size: 14px; font-weight: 500; }
-  .table-card-header span { font-size: 12px; color: var(--gray-400); }
-  table { width: 100%; border-collapse: collapse; }
-  thead th {
-    padding: 10px 16px;
-    text-align: left;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--gray-400);
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    background: var(--gray-50);
-    border-bottom: 1px solid var(--gray-100);
-  }
-  tbody tr { border-bottom: 1px solid var(--gray-100); transition: background 0.1s; }
-  tbody tr:last-child { border-bottom: none; }
-  tbody tr:hover { background: var(--gray-50); }
-  tbody td {
-    padding: 12px 16px;
-    font-size: 13px;
-    color: var(--black);
-  }
-  .mono { font-family: var(--mono); font-size: 12px; }
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 3px 9px;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 500;
-  }
-  .badge.high { background: var(--risk-high-bg); color: var(--risk-high); }
-  .badge.medium { background: var(--risk-medium-bg); color: var(--risk-medium); }
-  .badge.low { background: var(--risk-low-bg); color: var(--risk-low); }
-  .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
-
-  /* Pagination */
-  .pagination {
-    padding: 14px 20px;
-    border-top: 1px solid var(--gray-100);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .pagination-info { font-size: 12px; color: var(--gray-400); }
-  .pagination-btns { display: flex; gap: 6px; }
-  .page-btn {
-    width: 30px; height: 30px;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    background: var(--white);
-    font-size: 12px;
-    font-family: var(--font);
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--gray-600);
-    transition: all 0.15s;
-  }
-  .page-btn:hover:not(:disabled) { border-color: var(--black); color: var(--black); }
-  .page-btn.active { background: var(--black); color: var(--white); border-color: var(--black); }
-  .page-btn:disabled { opacity: 0.3; cursor: default; }
-
-  /* ── LOG DATA FORM ── */
-  .form-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    padding: 28px 32px;
-    max-width: 480px;
-  }
-  .form-card h2 { font-size: 17px; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.3px; }
-  .form-card > p { font-size: 13px; color: var(--gray-600); margin-bottom: 24px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .field input[type="date"],
-  .field input[type="number"] {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-family: var(--font);
-    background: var(--white);
-    color: var(--black);
-    outline: none;
-    transition: border-color 0.15s;
-    -moz-appearance: textfield;
-  }
-  .field input::-webkit-outer-spin-button,
-  .field input::-webkit-inner-spin-button { -webkit-appearance: none; }
-  .field input[type="date"]:focus,
-  .field input[type="number"]:focus { border-color: var(--black); }
-  .form-preview {
-    margin-top: 20px;
-    padding: 14px 16px;
-    background: var(--gray-50);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--gray-100);
-    display: none;
-  }
-  .form-preview.visible { display: block; }
-  .form-preview-label { font-size: 11px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
-  .form-preview-row { display: flex; justify-content: space-between; align-items: center; }
-  .form-preview-risk { font-size: 15px; font-weight: 600; }
-  .form-preview-risk.high { color: var(--risk-high); }
-  .form-preview-risk.medium { color: var(--risk-medium); }
-  .form-preview-risk.low { color: var(--risk-low); }
-  .form-preview-reason { font-size: 12px; color: var(--gray-400); margin-top: 4px; }
-  .btn-submit {
-    margin-top: 20px;
-    width: 100%;
-    padding: 11px;
-    background: var(--black);
-    color: var(--white);
-    border: none;
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-weight: 500;
-    font-family: var(--font);
-    cursor: pointer;
-    transition: opacity 0.15s;
-  }
-  .btn-submit:hover { opacity: 0.85; }
-  .form-success {
-    display: none;
-    margin-top: 14px;
-    padding: 12px 14px;
-    background: var(--risk-low-bg);
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    color: var(--risk-low);
-    font-weight: 500;
-  }
-
-  /* ── PROFILE ── */
-  .profile-grid {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 16px;
-    align-items: start;
-  }
-  .profile-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    padding: 24px;
-  }
-  .profile-avatar {
-    width: 56px; height: 56px;
-    background: var(--black);
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--white);
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 14px;
-  }
-  .profile-card h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.3px; }
-  .profile-card .profile-role { font-size: 12px; color: var(--gray-400); margin-bottom: 20px; margin-top: 3px; }
-  .profile-field { margin-bottom: 14px; }
-  .profile-field-label { font-size: 11px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 3px; }
-  .profile-field-value { font-size: 13px; color: var(--black); }
-  .info-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    padding: 24px;
-  }
-  .info-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 16px; }
-  .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--gray-100); font-size: 13px; }
-  .info-row:last-child { border-bottom: none; }
-  .info-row-label { color: var(--gray-600); }
-
-  @media (max-width: 680px) {
-    .dash-grid { grid-template-columns: 1fr; }
-    .profile-grid { grid-template-columns: 1fr; }
-    .form-row { grid-template-columns: 1fr; }
-    .panel { padding: 16px; }
-    .nav { padding: 0 16px; }
-  }
-</style>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-<!-- ── LOGIN ── -->
-<div id="view-login" class="view active">
+<!-- Loading overlay -->
+<div id="loading-overlay">
+  <div class="spinner"></div>
+</div>
+
+<!-- LOGIN -->
+<div id="view-login" class="view">
   <div class="login-box">
     <div class="login-logo">
       <div class="login-logo-icon">
@@ -481,32 +25,30 @@
           <path d="M9 8C9 8 7 10 7 11.5C7 12.33 7.67 13 8.5 13C8.78 13 9.05 12.92 9.27 12.78" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
         </svg>
       </div>
+      <span class="login-logo-name">TFA</span>
     </div>
     <h1>Sign in</h1>
     <p>Access your organization's dashboard.</p>
     <div class="field">
-      <label>Username</label>
-      <input type="text" id="login-user" placeholder="e.g. ranch_drill" autocomplete="off" />
+      <label>Email</label>
+      <input type="email" id="login-email" placeholder="you@example.com" autocomplete="off" />
     </div>
     <div class="field">
       <label>Password</label>
       <input type="password" id="login-pass" placeholder="••••••••" />
     </div>
-    <div class="login-error" id="login-error">Incorrect username or password. Try again.</div>
-    <button class="btn-primary" onclick="doLogin()">Sign in</button>
-    <div class="login-hint">
-      <span style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-family:var(--font);font-weight:500;margin-bottom:6px;display:block;">Dummy accounts</span>
-      <span>ranch_drill / forest2026</span>
-      <span>wildearth / wilert2026</span>
-    </div>
+    <div class="login-error" id="login-error">Incorrect email or password. Try again.</div>
+    <button class="btn-primary" id="login-btn" onclick="doLogin()">
+      <span id="login-btn-text">Sign in</span>
+    </button>
   </div>
 </div>
 
-<!-- ── APP ── -->
+<!-- APP -->
 <div id="view-app" class="view">
   <nav class="nav">
     <div class="nav-left">
-      <div class="nav-logo"><div class="nav-logo-dot"></div>CW</div>
+      <div class="nav-logo"><div class="nav-logo-dot"></div>TFA</div>
       <div class="nav-tabs">
         <button class="nav-tab active" onclick="showPanel('dashboard', this)">Dashboard</button>
         <button class="nav-tab" onclick="showPanel('log', this)">Log Data</button>
@@ -527,34 +69,25 @@
         <h2 id="dash-title">Dashboard</h2>
         <p id="dash-subtitle">Weather data and fire risk overview</p>
       </div>
-
       <div class="stats-row" id="stats-row"></div>
-
       <div class="dash-grid">
         <div class="risk-card">
           <div class="risk-card-label">Current fire risk</div>
           <div class="dial-wrap">
             <svg id="dial-svg" viewBox="0 0 180 110" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <clipPath id="dialClip"><rect x="0" y="0" width="180" height="110"/></clipPath>
-              </defs>
-              <!-- Track segments -->
               <path id="arc-low"    d="" stroke-width="12" stroke-linecap="round" fill="none"/>
               <path id="arc-medium" d="" stroke-width="12" stroke-linecap="round" fill="none"/>
               <path id="arc-high"   d="" stroke-width="12" stroke-linecap="round" fill="none"/>
-              <!-- Needle -->
-              <line id="dial-needle" x1="90" y1="90" x2="90" y2="30" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+              <line id="dial-needle" x1="90" y1="90" x2="90" y2="30" stroke="#0a0a0a" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="90" cy="90" r="5" fill="#0a0a0a"/>
             </svg>
-            <div class="dial-value-text">
-              <div class="risk-label" id="dial-label">—</div>
-            </div>
           </div>
+          <div id="dial-pill"></div>
           <div class="risk-rule" id="dial-rule"></div>
         </div>
-
         <div class="table-card">
           <div class="table-card-header">
-            <h3>Weather log</h3>
+            <h3>Data log</h3>
             <span id="table-count"></span>
           </div>
           <table>
@@ -607,8 +140,11 @@
           </div>
           <div class="form-preview-reason" id="preview-reason"></div>
         </div>
-        <button class="btn-submit" onclick="submitEntry()">Save entry</button>
+        <button class="btn-submit" id="submit-btn" onclick="submitEntry()">
+          <span id="submit-btn-text">Save entry</span>
+        </button>
         <div class="form-success" id="form-success">Entry saved successfully.</div>
+        <div class="form-error-msg" id="form-error">Failed to save. Please try again.</div>
       </div>
     </div>
 
@@ -624,7 +160,7 @@
           <h3 id="profile-name"></h3>
           <div class="profile-field">
             <div class="profile-field-label">Username</div>
-            <div class="profile-field-value mono" id="profile-username"></div>
+            <div class="profile-field-value font" id="profile-username"></div>
           </div>
           <div class="profile-field">
             <div class="profile-field-label">Region</div>
@@ -637,253 +173,7 @@
   </div>
 </div>
 
-<script>
-const DB = {
-  users: {
-    ranch_drill: {
-      password: "forest2026",
-      name: "Ranch Drill",
-      region: "Nigeria",
-      station: "RDL-NGR-003",
-      coords: "-2.1847° S, 60.4924° W",
-      since: "March 2025",
-      data: [
-        { date: "2026-02-10", temp: 36.2, rain: 0.00 },
-        { date: "2026-01-28", temp: 38.5, rain: 0.00 },
-        { date: "2026-01-15", temp: 37.1, rain: 0.00 },
-        { date: "2025-12-20", temp: 35.8, rain: 0.00 },
-      ]
-    },
-    wildearth: {
-      password: "wilert2026",
-      name: "Wild Earth",
-      region: "Benin Republic",
-      station: "WET-BR-002",
-      coords: "-15.7801° S, 47.9292° W",
-      since: "Jan 2025",
-      data: [
-        { date: "2026-02-14", temp: 39.1, rain: 0.00 },
-        { date: "2026-01-22", temp: 40.3, rain: 0.00 },
-        { date: "2025-12-12", temp: 38.8, rain: 0.00 },
-        { date: "2025-11-05", temp: 37.5, rain: 0.00 },
-      ]
-    }
-  }
-};
+<script src="app.js"></script>
 
-let currentUser = null;
-let currentPage = 1;
-const PAGE_SIZE = 5;
-
-function getRisk(date, rain) {
-  const m = new Date(date).getUTCMonth() + 1;
-  const noRain = parseFloat(rain) === 0.00;
-  if ([10,11,12,1,2,3].includes(m) && noRain) return { level: "high",   reason: `Month ${monthName(m)}, 0.00mm rain. Peak fire season` };
-  if ([4,6,7].includes(m)            && noRain) return { level: "medium", reason: `Month ${monthName(m)}, 0.00mm rain. Moderate fire risk` };
-  if ([8,9].includes(m)              && noRain) return { level: "low",    reason: `Month ${monthName(m)}, 0.00mm rain. Low fire risk` };
-  return { level: "medium", reason: rain > 0 ? `${rain}mm rainfall recorded. Risk reduced` : "Insufficient data for classification" };
-}
-
-function monthName(m) {
-  return ["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][m];
-}
-
-function riskLabel(level) {
-  return { high: "High", medium: "Medium", low: "Low" }[level];
-}
-
-function doLogin() {
-  const u = document.getElementById("login-user").value.trim();
-  const p = document.getElementById("login-pass").value;
-  const err = document.getElementById("login-error");
-  if (DB.users[u] && DB.users[u].password === p) {
-    err.style.display = "none";
-    currentUser = u;
-    currentPage = 1;
-    document.getElementById("view-login").classList.remove("active");
-    document.getElementById("view-app").classList.add("active");
-    renderAll();
-  } else {
-    err.style.display = "block";
-  }
-}
-
-document.addEventListener("keydown", e => {
-  if (e.key === "Enter" && document.getElementById("view-login").classList.contains("active")) doLogin();
-});
-
-function doLogout() {
-  currentUser = null;
-  document.getElementById("view-app").classList.remove("active");
-  document.getElementById("view-login").classList.add("active");
-  document.getElementById("login-user").value = "";
-  document.getElementById("login-pass").value = "";
-}
-
-function showPanel(id, btn) {
-  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-  document.querySelectorAll(".nav-tab").forEach(t => t.classList.remove("active"));
-  document.getElementById("panel-" + id).classList.add("active");
-  btn.classList.add("active");
-}
-
-function renderAll() {
-  const u = DB.users[currentUser];
-  document.getElementById("nav-orgname").textContent = u.name;
-  renderDashboard();
-  renderProfile();
-}
-
-function renderDashboard() {
-  const u = DB.users[currentUser];
-  const data = [...u.data].sort((a,b) => new Date(b.date) - new Date(a.date));
-  document.getElementById("dash-title").textContent = u.name;
-  document.getElementById("dash-subtitle").textContent = `Station ${u.station} · ${u.region}`;
-
-  const latest = data[0];
-  const latestRisk = latest ? getRisk(latest.date, latest.rain) : null;
-  const avgTemp = data.length ? (data.reduce((s,d) => s + d.temp, 0) / data.length).toFixed(1) : "—";
-  const highCount = data.filter(d => getRisk(d.date, d.rain).level === "high").length;
-
-  if (latestRisk) renderDial(latestRisk, latest);
-  renderTable(data);
-}
-
-function renderDial(risk, entry) {
-  const colors = { high: "#c0392b", medium: "#d68910", low: "#1e8449" };
-  const angles = { high: 150, medium: 90, low: 30 };
-  const cx = 90, cy = 90, r = 70;
-
-  function arcPath(startDeg, endDeg) {
-    const s = (startDeg - 90) * Math.PI / 180;
-    const e = (endDeg - 90) * Math.PI / 180;
-    const x1 = cx + r * Math.cos(s), y1 = cy + r * Math.sin(s);
-    const x2 = cx + r * Math.cos(e), y2 = cy + r * Math.sin(e);
-    return `M${x1} ${y1} A${r} ${r} 0 0 1 ${x2} ${y2}`;
-  }
-
-  document.getElementById("arc-low").setAttribute("d", arcPath(200, 240));
-  document.getElementById("arc-low").setAttribute("stroke", "#d4edda");
-  document.getElementById("arc-medium").setAttribute("d", arcPath(245, 295));
-  document.getElementById("arc-medium").setAttribute("stroke", "#fdebd0");
-  document.getElementById("arc-high").setAttribute("d", arcPath(300, 340));
-  document.getElementById("arc-high").setAttribute("stroke", "#fadbd8");
-
-  const activeArcMap = { low: "arc-low", medium: "arc-medium", high: "arc-high" };
-  const activeId = activeArcMap[risk.level];
-  document.getElementById(activeId).setAttribute("stroke", colors[risk.level]);
-
-  const needleAngle = angles[risk.level];
-  const rad = (needleAngle - 90) * Math.PI / 180;
-  const nx = cx + 58 * Math.cos(rad);
-  const ny = cy + 58 * Math.sin(rad);
-  const needle = document.getElementById("dial-needle");
-  needle.setAttribute("x2", nx.toFixed(1));
-  needle.setAttribute("y2", ny.toFixed(1));
-
-  document.getElementById("dial-label").textContent = riskLabel(risk.level);
-  document.getElementById("dial-label").style.color = colors[risk.level];
-}
-
-function renderTable(data) {
-  const total = data.length;
-  const totalPages = Math.ceil(total / PAGE_SIZE);
-  const start = (currentPage - 1) * PAGE_SIZE;
-  const pageData = data.slice(start, start + PAGE_SIZE);
-
-  document.getElementById("table-count").textContent = `${total} records`;
-  const tbody = document.getElementById("table-body");
-  tbody.innerHTML = pageData.map(d => {
-    const risk = getRisk(d.date, d.rain);
-    return `<tr>
-      <td class="mono">${formatDate(d.date)}</td>
-      <td>${d.temp.toFixed(1)} °C</td>
-      <td>${d.rain.toFixed(2)} mm</td>
-      <td><span class="badge ${risk.level}"><span class="badge-dot"></span>${riskLabel(risk.level)}</span></td>
-    </tr>`;
-  }).join("");
-
-  document.getElementById("page-info").textContent =
-    `Showing ${start+1}–${Math.min(start+PAGE_SIZE, total)} of ${total}`;
-
-  const btnsCont = document.getElementById("page-btns");
-  btnsCont.innerHTML = "";
-
-  const prev = document.createElement("button");
-  prev.className = "page-btn";
-  prev.textContent = "←";
-  prev.disabled = currentPage === 1;
-  prev.onclick = () => { currentPage--; renderDashboard(); };
-  btnsCont.appendChild(prev);
-
-  for (let i = 1; i <= totalPages; i++) {
-    const b = document.createElement("button");
-    b.className = "page-btn" + (i === currentPage ? " active" : "");
-    b.textContent = i;
-    b.onclick = (function(pg){ return () => { currentPage = pg; renderDashboard(); }; })(i);
-    btnsCont.appendChild(b);
-  }
-
-  const next = document.createElement("button");
-  next.className = "page-btn";
-  next.textContent = "→";
-  next.disabled = currentPage === totalPages;
-  next.onclick = () => { currentPage++; renderDashboard(); };
-  btnsCont.appendChild(next);
-}
-
-function renderProfile() {
-  const u = DB.users[currentUser];
-  const initials = u.name.split(" ").slice(0,2).map(w=>w[0]).join("").toUpperCase();
-  document.getElementById("profile-avatar").textContent = initials;
-  document.getElementById("profile-name").textContent = u.name;
-  document.getElementById("profile-username").textContent = currentUser;
-  document.getElementById("profile-region").textContent = u.region;
-  document.getElementById("profile-station").textContent = u.station;
-  document.getElementById("profile-coords").textContent = u.coords;
-  const latest = [...u.data].sort((a,b) => new Date(b.date)-new Date(a.date))[0];
-  document.getElementById("info-entries").textContent = u.data.length;
-  document.getElementById("info-since").textContent = u.since;
-  document.getElementById("info-latest").textContent = latest ? formatDate(latest.date) : "—";
-}
-
-function updatePreview() {
-  const date = document.getElementById("form-date").value;
-  const rain = document.getElementById("form-rain").value;
-  const preview = document.getElementById("form-preview");
-  if (!date || rain === "") { preview.classList.remove("visible"); return; }
-  const risk = getRisk(date, parseFloat(rain));
-  const colors = { high: "var(--risk-high)", medium: "var(--risk-medium)", low: "var(--risk-low)" };
-  preview.classList.add("visible");
-  const rr = document.getElementById("preview-risk");
-  rr.textContent = riskLabel(risk.level) + " Risk";
-  rr.className = "form-preview-risk " + risk.level;
-  document.getElementById("preview-pill").innerHTML =
-    `<div class="risk-pill ${risk.level}"><div class="risk-pill-dot"></div>${riskLabel(risk.level)}</div>`;
-  document.getElementById("preview-reason").textContent = risk.reason;
-}
-
-function submitEntry() {
-  const date = document.getElementById("form-date").value;
-  const temp = parseFloat(document.getElementById("form-temp").value);
-  const rain = parseFloat(document.getElementById("form-rain").value);
-  if (!date || isNaN(temp) || isNaN(rain)) return;
-  DB.users[currentUser].data.push({ date, temp, rain });
-  document.getElementById("form-date").value = "";
-  document.getElementById("form-temp").value = "";
-  document.getElementById("form-rain").value = "";
-  document.getElementById("form-preview").classList.remove("visible");
-  const success = document.getElementById("form-success");
-  success.style.display = "block";
-  setTimeout(() => { success.style.display = "none"; }, 3000);
-  currentPage = 1;
-  renderDashboard();
-}
-
-function formatDate(str) {
-  const d = new Date(str + "T00:00:00");
-  return d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
-}
-</script>
 </body>
 </html>
