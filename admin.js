@@ -121,8 +121,6 @@ function renderOrgs() {
       <td class="mono">${o.username}</td>
       <td>${o.region || "—"}</td>
       <td class="mono">${o.station_id || "—"}</td>
-      <td>${o.weather_entries?.[0]?.count ?? 0}</td>
-      <td class="mono">${formatDate(o.created_at)}</td>
       <td>
         <div class="action-btns">
           <button class="btn btn-ghost" style="padding:5px 10px;font-size:12px" onclick="viewEntries('${o.id}','${escHtml(o.name)}')">Entries</button>
@@ -133,6 +131,8 @@ function renderOrgs() {
       </td>
     </tr>`).join("");
 }
+
+      // <td>${o.weather_entries?.[0]?.count ?? 0}</td><td class="mono">${formatDate(o.created_at)}</td>
 
 // VIEW ENTRIES
 async function viewEntries(orgId, orgName) {
