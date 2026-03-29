@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TFA Admin | SMACON</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="admin.js"></script>
+</head>
+<body>
+
+<div id="loading-overlay"><div class="spinner"></div></div>
+<div id="toast"></div>
+
+<!-- LOGIN -->
+<div id="view-login" class="view">
+  <div class="login-box">
+    <h1>Admin portal</h1>
+    <p>TFA</p>
+    <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="admin@example.com" /></div>
+    <div class="field"><label>Password</label><input type="password" id="login-pass" placeholder="••••••••" /></div>
+    <div class="login-error" id="login-error">Incorrect credentials or not an admin account.</div>
+    <button class="btn btn-primary" id="login-btn" onclick="doLogin()"><span id="login-btn-text">Sign in</span></button>
+    <div style="padding-top: 10px;"><a class="admin-btn-text" href="index.html">User</a></div>
+    <p style="padding-top: 20px; color:dimgray; font-size: 8px;">Dummy account</p>
+    <p style="margin-top: -25px; color:darkgray; font-size: 10px; font-family: 'Verdana';">admin@tfa.app / admin2026</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="view-app" class="view">
+  <nav class="nav">
+    <div class="nav-logo">TFA <span class="admin-badge">ADMIN</span></div>
+    <div class="nav-right">
+      <span class="nav-user" id="nav-user"></span>
+      <button class="btn btn-ghost" onclick="doLogout()">Sign out</button>
+    </div>
+  </nav>
+
+  <div class="main">
+    <!-- Orgs list -->
+    <div id="section-orgs">
+      <div class="page-header">
+        <div><h2>Organizations</h2></div>
+        <button class="btn btn-primary" style="width:auto;margin:0" onclick="openCreateModal()">+ New organization</button>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>All organizations</h3><span id="org-count"></span></div>
+        <table>
+          <thead><tr><th>Name</th><th>Username</th><th>Region</th><th>Station</th><th></th></tr></thead>
+          <tbody id="org-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Entries for one org -->
+    <div id="section-entries" class="entries-panel">
+      <div class="entries-panel-header">
+        <button class="back-btn" onclick="closeEntries()">← Back to organizations</button>
+        <h3 id="entries-org-name"></h3>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Weather entries</h3><span id="entries-count"></span></div>
+        <table>
+          <thead><tr><th>Date</th><th>Temperature</th><th>Rainfall</th><th>Risk</th><th></th></tr></thead>
+          <tbody id="entries-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE MODAL -->
+<div class="modal-backdrop" id="modal-create">
+  <div class="modal">
+    <h3>New organization</h3>
+    <p>Add a new organization</p>
+    <div class="field"><label>Organization's name</label><input type="text" id="c-name" placeholder="Wild Earth" /></div>
+    <div class="field"><label>Username</label><input type="text" id="c-username" placeholder="wildearth" /></div>
+    <div class="field"><label>Email</label><input type="email" id="c-email" placeholder="org@tfa.app" /></div>
+    <div class="field"><label>Password</label><input type="password" id="c-password" placeholder="min 6 characters" /></div>
+    <div class="field"><label>Region</label><input type="text" id="c-region" placeholder="Nigeria" /></div>
+    <div class="field"><label>Station ID</label><input type="text" id="c-station" placeholder="WEH-BRP-002" /></div>
+    <div class="field"><label>Coordinates</label><input type="text" id="c-coords" placeholder="-2.18° S, 60.49° W" /></div>
+    <div class="modal-error" id="create-error"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-create')">Cancel</button>
+      <button class="btn btn-primary" style="width:auto;margin:0" id="create-btn" onclick="createOrg()"><span id="create-btn-text">Create</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-backdrop" id="modal-edit">
+  <div class="modal">
+    <h3>Edit organization</h3>
+    <p>Update the organization's profile details.</p>
+    <input type="hidden" id="e-id" />
+    <div class="field"><label>Organization name</label><input type="text" id="e-name" /></div>
+    <div class="field"><label>Username</label><input type="text" id="e-username" /></div>
+    <div class="field"><label>Region</label><input type="text" id="e-region" /></div>
+    <div class="field"><label>Station ID</label><input type="text" id="e-station" /></div>
+    <div class="field"><label>Coordinates</label><input type="text" id="e-coords" /></div>
+    <div class="modal-error" id="edit-error"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-edit')">Cancel</button>
+      <button class="btn btn-primary" style="width:auto;margin:0" id="edit-btn" onclick="saveEdit()"><span id="edit-btn-text">Save</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- RESET PASSWORD MODAL -->
+<div class="modal-backdrop" id="modal-reset">
+  <div class="modal">
+    <h3>Reset password</h3>
+    <p id="reset-subtitle"></p>
+    <input type="hidden" id="r-id" />
+    <div class="field"><label>New password</label><input type="password" id="r-password" placeholder="min 6 characters" /></div>
+    <div class="modal-error" id="reset-error"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-reset')">Cancel</button>
+      <button class="btn btn-primary" style="width:auto;margin:0" id="reset-btn" onclick="resetPassword()"><span id="reset-btn-text">Reset</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE ORG MODAL -->
+<div class="modal-backdrop" id="modal-delete-org">
+  <div class="modal">
+    <h3>Delete organization</h3>
+    <p id="delete-org-subtitle"></p>
+    <input type="hidden" id="d-org-id" />
+    <p style="font-size:13px;color:var(--danger);margin-top:8px;">This will permanently delete the org account, all weather entries, and their login. This cannot be undone.</p>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-delete-org')">Cancel</button>
+      <button class="btn btn-danger" id="delete-org-btn" onclick="deleteOrg()"><span id="delete-org-btn-text">Delete</span></button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
