@@ -72,7 +72,7 @@ Early-stage prototype.
 
 ## Contributing
 
-Contributions are welcome. You can fork the repository, create a feature branch, and open a pull request with your changes.
+Contributions are welcome. You can fork the repository, create a branch, and open a pull request.
 
 ## License
 
