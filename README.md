@@ -4,7 +4,7 @@ Climate Watch is a prototype for recording daily local weather data and monitori
 
 The application gives organizations a dashboard for logging temperature and rainfall readings, reviewing historical records, and viewing a simple fire-risk indicator.
 
-![Prevent wildfires](https://unsplash.com/photos/wildfire-burning-across-hillside-at-dusk-kbTp7dBzHyY)
+![Prevent wildfires](https://images.unsplash.com/photo-1615092296061-e2ccfeb2f3d6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D)
 
 ## Features
 
@@ -79,3 +79,6 @@ Contributions are welcome. You can fork the repository, create a branch, and ope
 ## License
 
 This project is licensed under the MIT License.
+
+### GitHub pages
+[View](https://adoraa.github.io/climate_watch)<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23D4AF37'><path stroke-linecap='round' stroke-linejoin='round' d='M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59' /></svg>" width="16" height="16" style="vertical-align: middle; margin-left: 4px;" alt="pointer icon"/>
