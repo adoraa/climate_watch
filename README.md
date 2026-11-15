@@ -4,6 +4,8 @@ Climate Watch is a prototype for recording daily local weather data and monitori
 
 The application gives organizations a dashboard for logging temperature and rainfall readings, reviewing historical records, and viewing a simple fire-risk indicator.
 
+![Prevent wildfires](https://unsplash.com/photos/wildfire-burning-across-hillside-at-dusk-kbTp7dBzHyY)
+
 ## Features
 
 - **Organization dashboards:** View weather records and fire-risk summaries for each organization.
