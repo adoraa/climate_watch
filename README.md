@@ -81,4 +81,4 @@ Contributions are welcome. You can fork the repository, create a branch, and ope
 This project is licensed under the MIT License.
 
 ### GitHub pages
-[View](https://adoraa.github.io/climate_watch)<img src="pointer_icon.svg" width="20" height="20" style="vertical-align: -100px; margin-left: 4px;" alt="pointer icon"/>
+[View](https://adoraa.github.io/climate_watch)<img src="pointer_icon.svg" width="20" height="20" style="margin-left: 4px;" alt="pointer icon"/>
